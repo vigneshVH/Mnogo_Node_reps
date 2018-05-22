@@ -1,9 +1,6 @@
 var express=require('express');
 var bodyParser=require('body-parser');
 
-
-
-
 var {mongoose}=require('./Db/mongoose');
 var {Todo}=require('./Models/Todo');
 var {Vinai}=require('./Models/Vinai');
@@ -22,7 +19,7 @@ app.post('/todos',(req,res)=>
   },(e)=>
     {
       res.status(400).send(e);
-    })
+    });
 });
 
 app.listen(3000,()=>
@@ -30,13 +27,13 @@ app.listen(3000,()=>
 console.log("Started port 3000");
 });
 
-app.get('/todos',(req,res)=>{
-  Todo.find().then((todos)=>{
-    res.send({todos});
-  },(e)=>{
-    res.status(400).send(e);
-  })
-});
+// app.get('/todos',(req,res)=>{
+//   Todo.find().then((todos)=>{
+//     res.send({todos});
+//   },(e)=>{
+//     res.status(400).send(e);
+//   })
+// });
 
 
-module.exports={app};
+module.exports = {app};

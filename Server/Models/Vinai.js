@@ -3,9 +3,19 @@
 
 var mongoose=require('mongoose');
 
-var Vinai=mongoose.model('vinai',{text:{type:String},completed:{type:Boolean},completedAt:{type:Number}});
+var Vinai=mongoose.model('vinai',{
+  text:{
+    type:String
+  },
+  completed:{
+    type:Boolean
+  },
+  completedAt:{
+    type:Number
+  }
+});
 
-var orVinai=new Vinai({text:"my name vinai"});
+//var orVinai=new Vinai({text:"my name vinai"});
 
 // orVinai.save().then((doc)=>
 // {

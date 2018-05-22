@@ -4,9 +4,20 @@ var mongoose=require('mongoose');
 
 
 var Todo=mongoose.model('Vickies',{
- text:{ type:String,require:true,minlength:3,trim:true},
- completed:{type:Boolean,require:false},
- completedAt:{type:Number}
+ text:{
+   type:String,
+   required:true,
+   minlength:1,
+   trim:true
+ },
+ completed:{
+   type:Boolean,
+   required:false
+ },
+ completedAt:{
+   type:Number,
+   default:null
+ }
 });
 
 // var newTodo=new Todo({ text:"vicky details"});
