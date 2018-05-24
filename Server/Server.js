@@ -21,7 +21,7 @@ app.post('/todos',(req,res)=>{
     res.send(doc);
   },(e)=>
 {
-  console.log(res.status(400).send(e));
+res.status(400).send(e);
 });
 
 
@@ -32,3 +32,6 @@ app.listen(3000,()=>
 {
   console.log("started port 3000");
 });
+
+
+module.exports={app};
