@@ -6,10 +6,14 @@ const {Todo}=require('./../Models/todo');
 
 const todos=[{
   _id:new ObjectId(),
-  text:"First test todo"
+  text:"First test todo",
+  completed:true,
+  completedAt:334
 },{
   _id:new ObjectId(),
-  text:"Second test todo"
+  text:"Second test todo",
+  completed:true,
+  completedAt:333
 }];
 
 
@@ -26,8 +30,6 @@ describe('POST/todos',()=>
   it('Shold create new todo',(done)=>
 {
   var text="Test todo test";
-
-
   request(app)
   .post('/todos')
   .send({text})
@@ -35,7 +37,6 @@ describe('POST/todos',()=>
   .expect((res)=>
   {
     expect(res.body.text).toBe(text);
-
   })
   .end((err,res)=>
 {
@@ -79,7 +80,7 @@ Todo.find().then((todos)=>
 
 
 describe('GET/todos',()=>
-{
+{completed:true
   it('Should get all todos',(done)=>
 {
   request(app)
@@ -155,13 +156,67 @@ describe('DELETE /todos/:id',()=>{
 });
 });
 
-// it('should return 404 if todo not found',(done)=>
-// {
-//
-// });
-// it('should return 404 if object id is invalid',(done)=>
-// {
-//
-// });
-//
+it('should return 404 if todo not found',(done)=>
+{var hexId=new ObjectId().toHexString();
+
+  request(app)
+  .delete(`/todos/${hexId}`)
+  .expect(404)
+  .end(done);
+
+});
+it('should return 404 if object id is invalid',(done)=>
+{
+  request(app)
+  .delete('/todos/123abc')
+  .expect(404)
+  .end(done);
+
+});
+});
+
+ describe('PATCH /todos/:id',()=>
+{
+  it('should update the todo',(done)=>
+{
+   var hexId=todos[0]._id.toHexString();
+   var text='This should be the new text ';
+   request(app)
+   .patch(`/todos/${hexId}`)
+   .send({
+     completed:true,
+     text:text
+   })
+   .expect(200)
+   .expect((res)=>
+ {
+   expect(res.body.todo.text).toBe(text);
+   expect(res.body.todo.completed).toBe(true);
+   expect(res.body.todo.completedAt).toBeA('number');
+
+ })
+ .end(done);
+});
+
+it('shold clear completedat when todo is not completed',(done)=>
+{
+  var hexId=todos[1]._id.toHexString();
+  var text='This should be the new text ';
+  request(app)
+  .patch(`/todos/${hexId}`)
+  .send({
+    completed:true,
+    text:text
+  })
+  .expect(200)
+  .expect((res)=>
+{
+  expect(res.body.todo.text).toBe(text);
+  expect(res.body.todo.completed).toBe(true);
+  expect(res.body.todo.completedAt).toBeA('number');
+
+})
+.end(done);
+});
+
 });

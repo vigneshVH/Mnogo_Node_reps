@@ -85,13 +85,13 @@ app.patch('/todos/:id',(req,res)=>
     return res.status(404).send();
   }
 
-  if(_.isBoolean(body.complted)&&body.completed)
+  if(_.isBoolean(body.completed)&&body.completed)
   {
-    body.compltedAt=new Date().getTime();
+    body.completedAt=new Date().getTime();
   }
   else{
       body.completed=false;
-      body.compltedAt=null;
+      body.completedAt=null;
   }
 Todo.findByIdAndUpdate(id,{$set:body},{new:true}).then((todo)=>
 {
