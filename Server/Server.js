@@ -9,7 +9,7 @@ const {ObjectId}=require('mongodb');
 var {mongoose}=require('./DB/mongoose');
 var {Todo}=require('./Models/todo');
 var {User}=require('./Models/user');
-
+var {authenticate}=require('./middleware/authenticate');
 var app=express();
 const port =process.env.PORT || 3000;
 
@@ -129,6 +129,11 @@ return user.generateAuthToken();
   //res.send("inside catch");
   res.status(400).send(e);
 });
+});
+
+app.get('/users/me',authenticate,(req,res)=>
+{
+res.send(req.user);
 });
 
 app.listen(port,()=>
